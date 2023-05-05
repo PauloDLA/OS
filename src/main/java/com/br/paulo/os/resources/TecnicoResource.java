@@ -2,6 +2,7 @@
 package com.br.paulo.os.resources;
 
 import com.br.paulo.os.domain.Tecnico;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +14,8 @@ import com.br.paulo.os.services.TecnicoService;
 @RequestMapping(value = "/tecnicos")
 public class TecnicoResource {
 
-    // localhost/8080/tecnicos
-
-
+    // localhost:8080/tecnicos/1
+    @Autowired
     private TecnicoService service;
 
     @GetMapping(value = "/{id}")

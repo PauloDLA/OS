@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Service
 public class TecnicoService {
-
 	@Autowired
 	private TecnicoRepository repository;
 

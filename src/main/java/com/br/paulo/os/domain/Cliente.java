@@ -13,7 +13,7 @@ public class Cliente extends Pessoa {
     private static final long serialVersionUID = 1L;
 
     @OneToMany(mappedBy = "cliente")
-    private List<Os> list = new ArrayList<>();
+    private List<Os> listOs = new ArrayList<>();
 
     public Cliente() {
         super();
@@ -25,12 +25,12 @@ public class Cliente extends Pessoa {
 
     }
 
-    public List<Os> getList() {
-        return list;
+    public List<Os> getListOs() {
+        return listOs;
     }
 
-    public void setList(List<Os> list) {
-        this.list = list;
+    public void setListOs(List<Os> list) {
+        this.listOs = list;
     }
 
 

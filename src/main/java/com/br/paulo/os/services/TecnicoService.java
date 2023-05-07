@@ -1,8 +1,10 @@
 package com.br.paulo.os.services;
 
+import com.br.paulo.os.domain.Pessoa;
 import com.br.paulo.os.domain.Tecnico;
 import com.br.paulo.os.dtos.TecnicoDTO;
 import com.br.paulo.os.exceptions.ObjectNotFoundException;
+import com.br.paulo.os.repositories.PessoaRepository;
 import com.br.paulo.os.resources.execptions.DataIntegratyViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,8 @@ import java.util.Optional;
 public class TecnicoService {
 	@Autowired
 	private TecnicoRepository repository;
-
+	@Autowired
+	private PessoaRepository pessoaRepository;
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = repository.findById(id);
 		return obj.orElseThrow(()-> new ObjectNotFoundException("Tecnico " + id + " não encontrado" ));
@@ -43,12 +46,21 @@ public class TecnicoService {
 		oldObj.setTelefone(objDTO.getTelefone());
 		return repository.save(oldObj);
 	}
-	private Tecnico findBycpf(TecnicoDTO objDTO){
 
-		Tecnico obj = repository.findByCPF(objDTO.getCpf());
+	public void delete(Integer id) {
+		Tecnico obj =findById(id);
+		if(obj.getListOs().size() > 0){
+			throw  new DataIntegratyViolationException("Tecnico com Ordens ativas, não pode ser deletado");
+		}
+		repository.deleteById(id);
+	}
+	private Pessoa findBycpf(TecnicoDTO objDTO){
+
+		Pessoa obj = pessoaRepository.findByCPF(objDTO.getCpf());
 		if(obj != null){
 			return obj;
 		}
 		return null;
 	}
+
 }
